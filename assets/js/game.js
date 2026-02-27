@@ -50,9 +50,20 @@ let session = loadSession();
 if(!session?.active) location.href = "index.html";
 
 (async function main(){
-  data = await (await fetch("data/case_reichenberg.json")).json();
-
+  // ✅ mapa naskočí hned
   map = initMap();
+
+  // ✅ zkus načíst data hry (JSON) bezpečně
+  try {
+    const res = await fetch("data/case_reichenberg.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`JSON load failed: ${res.status} ${res.statusText}`);
+    data = await res.json();
+  } catch (e) {
+    console.error(e);
+    toast("Chyba: nepodařilo se načíst data hry (JSON). Zkontroluj cestu / GitHub Pages.");
+    gpsEl.textContent = "—";
+    return; // bez dat nemá smysl pokračovat
+  }
 
   // timer
   setInterval(()=>{
@@ -297,5 +308,6 @@ function finishGame(bonusDone){
 
 }
 }
+
 
 
