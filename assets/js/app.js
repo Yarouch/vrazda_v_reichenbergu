@@ -19,7 +19,7 @@ btnStart.onclick = async () => {
     bonusEligible: false,
     bonusCompleted: false
   });
-  location.href = "game.html";
+  location.href = "intro.html";
 };
 
 btnResume.onclick = () => location.href = "game.html";
