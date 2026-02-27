@@ -120,14 +120,17 @@ function renderEvidence(){
 
 function renderStage(){
   const stage = currentStage();
-  const totalMain = data.stages.filter(s=>!s.isBonus).length;
-  const mainIndex = data.stages.filter(s=>!s.isBonus).findIndex(s=>s.id===stage.id);
-
+  const mainStages = data.stages.filter(s => !s.isBonus);
+  const mainIndex = mainStages.findIndex(s => s.id === stage.id);
   const isBonus = !!stage.isBonus;
-  kickerEl.textContent = isBonus ? "BONUS" : `Stanoviště ${mainIndex+1}/${totalMain}`;
+  if (isBonus) {
+    kickerEl.textContent = "BONUS — Dopadení";
+  } else {
+    kickerEl.textContent = `Stanoviště ${mainIndex + 1} / ${mainStages.length}`;
+  }
   titleEl.textContent = stage.title;
   storyEl.textContent = stage.story;
-  taskEl.textContent = stage.task;
+  taskEl.textContent = stage.task;;
 
   // marker
   if(targetMarker) map.removeLayer(targetMarker);
@@ -269,4 +272,5 @@ function finishGame(bonusDone){
   session.bonusCompleted = !!bonusDone;
   saveSession(session);
   location.href = "end.html";
+
 }
