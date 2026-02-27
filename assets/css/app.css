@@ -86,7 +86,7 @@ body.game{ height:100vh; overflow:hidden; }
 
 .toast{
   position:fixed; left:50%; transform:translateX(-50%);
-  bottom:200px; background:#0f1620; border:1px solid var(--line);
+  bottom:220px; background:#0f1620; border:1px solid var(--line);
   padding:10px 12px; border-radius:12px; display:none;
   z-index:999999;
 }
