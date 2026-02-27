@@ -7,20 +7,27 @@
   <link rel="stylesheet" href="assets/css/app.css" />
 </head>
 <body>
-  <div class="page">
-    <div class="hero">
+  <main class="page">
+    <header class="hero">
       <h1>🏆 Leaderboard</h1>
-      <p class="muted">Nejrychlejší týmy v případu Reichenberg</p>
-    </div>
+      <p class="muted">Top 20 nejrychlejších týmů</p>
+    </header>
 
-    <div class="card">
-      <div id="lbStatus" class="muted">Načítám…</div>
-      <div id="lbList" style="margin-top:12px;"></div>
+    <section class="card">
+      <div class="row">
+        <div class="label">Stav</div>
+        <div class="mono" id="lbStatus">Načítám…</div>
+      </div>
 
       <div class="divider"></div>
+
+      <div id="lbList"></div>
+
+      <div class="divider"></div>
+
       <a class="btn" href="index.html">Zpět na start</a>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <script type="module" src="assets/js/leaderboard.js"></script>
 </body>
