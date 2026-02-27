@@ -1,5 +1,5 @@
-const SUPABASE_URL = "https://TVUJ_PROJECT.supabase.co";
-const SUPABASE_ANON_KEY = "TVUJ_ANON_KEY";
+const SUPABASE_URL = "https://hpawsxioispppkfiridq.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYXdzeGlvaXNwcHBrZmlyaWRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTY5NTEsImV4cCI6MjA4Nzc5Mjk1MX0.Hts2vRw-u-QQ0cJnKy7lt6cmDeZSLdDp2BuimJ_aPQ0";
 
 const statusEl = document.getElementById("lbStatus");
 const listEl = document.getElementById("lbList");
