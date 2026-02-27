@@ -1,1 +1,122 @@
-
+{
+  "meta": {
+    "title": "Vražda v Reichenbergu",
+    "softGps": true,
+    "defaultRadiusM": 40,
+    "bonusTimeThresholdSec": 4200
+  },
+  "penalties": { "hint1Sec": 120, "hint2Sec": 240, "hint3Sec": 360 },
+  "stages": [
+    {
+      "id": "museum",
+      "order": 1,
+      "title": "Severočeské muzeum",
+      "lat": 50.7670,
+      "lng": 15.0586,
+      "radiusM": 45,
+      "story": "Archivář ti podává složku. „Wiedermaier nezemřel kvůli penězům. Zemřel kvůli pravdě.“",
+      "task": "Najdi nad hlavním vstupem 2 prvky (např. postavy a štíty). Sečti je a zadej výsledek.",
+      "answer": { "type": "number", "value": 7 },
+      "hints": [
+        "Zaměř se na dekor přímo nad hlavním vchodem.",
+        "Počítej jen prvky na hlavním portálu, ne na celé fasádě.",
+        "Výsledek je jednociferný."
+      ],
+      "evidenceUnlock": ["note_A"]
+    },
+    {
+      "id": "theatre",
+      "order": 2,
+      "title": "Divadlo F. X. Šaldy",
+      "lat": 50.7712,
+      "lng": 15.0580,
+      "radiusM": 40,
+      "story": "Premiéra skončila. VIP salonek osiřel. Někdo ale zůstal dost dlouho na to, aby se pohádal…",
+      "task": "Najdi rok na fasádě. Sečti jeho číslice a zadej součet.",
+      "answer": { "type": "number", "value": 20 },
+      "hints": [
+        "Hledej čtyřmístný letopočet na fasádě.",
+        "Součet číslic má vyjít kolem dvaceti.",
+        "Je to 1+8+8+3."
+      ],
+      "evidenceUnlock": ["suspect_CJ"]
+    },
+    {
+      "id": "townhall",
+      "order": 3,
+      "title": "Radnice",
+      "lat": 50.7698,
+      "lng": 15.0589,
+      "radiusM": 45,
+      "story": "Na schodech radnice se naposledy veřejně pohádali. Někdo se díval. Někdo si to zapamatoval až moc dobře.",
+      "task": "Najdi na věži ciferníky. Kolik jich ukazuje stejný čas? Zadej počet.",
+      "answer": { "type": "number", "value": 2 },
+      "hints": [
+        "Neřeš minuty na sekundy — stačí shoda času jako celku.",
+        "Zaměř se na ciferníky na jedné věži.",
+        "Počet je menší než 4."
+      ],
+      "evidenceUnlock": ["motive_forgery"]
+    },
+    {
+      "id": "church",
+      "order": 4,
+      "title": "Kostel sv. Antonína Velikého",
+      "lat": 50.7708,
+      "lng": 15.0571,
+      "radiusM": 45,
+      "story": "Tady měl zaznít tichý slib. Místo toho zůstalo jen ticho — a stopa po někom, kdo se bojí mluvit.",
+      "task": "Najdi symbol na vstupu (nebo v blízkosti) a vyber jeho význam: Který z nich nejčastěji značí smrt?",
+      "answer": { "type": "mcq", "value": "lebka", "options": ["kříž", "lebka", "meč", "koruna"] },
+      "hints": [
+        "Jde o univerzální symbol, ne jen náboženský.",
+        "Představ si varovný znak na jedu.",
+        "Je to lebka."
+      ],
+      "evidenceUnlock": ["informant_silenced"]
+    },
+    {
+      "id": "pre_finish",
+      "order": 5,
+      "title": "Stopa k útěku",
+      "lat": 50.7722,
+      "lng": 15.0602,
+      "radiusM": 60,
+      "story": "Vrah ví, že se kruh uzavírá. Někde už se píská na odjezd.",
+      "task": "Z odpovědí z předchozích míst slož čtyřmístný kód: (Muzeum)(Divadlo)(Radnice)(Kostel) → zadej jako číslo bez mezer.",
+      "answer": { "type": "text", "value": "7202" },
+      "hints": [
+        "Je to slepení výsledků v pořadí stanovišť.",
+        "Použij jen čísla, žádné oddělovače.",
+        "Muzeum 7, Divadlo 20, Radnice 2, Kostel  (MCQ = 0) → pro prototyp dej 7202."
+      ],
+      "evidenceUnlock": ["accuse_CJ"]
+    },
+    {
+      "id": "bonus_station",
+      "order": 6,
+      "isBonus": true,
+      "title": "BONUS — Nádraží (dopadení)",
+      "lat": 50.7667,
+      "lng": 15.0546,
+      "radiusM": 70,
+      "story": "Máš náskok. Pokud se pohneš rychle, doženeš ho dřív, než nastoupí.",
+      "task": "Najdi označení nástupiště (nebo jiný veřejný údaj na místě) a zadej ho. (Pro prototyp zadej: 1)",
+      "answer": { "type": "text", "value": "1" },
+      "hints": [
+        "Hledej velké číslo na orientačních tabulích.",
+        "Je to jednociferné.",
+        "Je to 1."
+      ],
+      "evidenceUnlock": ["caught"]
+    }
+  ],
+  "evidence": {
+    "note_A": { "label": "Útržek dopisu A", "text": "…divadlo… 21:30… a jméno jen v iniciálách." },
+    "suspect_CJ": { "label": "Podezřelý: C. J.", "text": "Mecenáš a sběratel. Pověst je pro něj měna." },
+    "motive_forgery": { "label": "Motiv", "text": "Odhalení padělků by ho zničilo společensky i finančně." },
+    "informant_silenced": { "label": "Informátor", "text": "Někdo ho umlčel dřív, než stihl promluvit." },
+    "accuse_CJ": { "label": "Obvinění", "text": "Důkazy míří na muže z VIP kruhů." },
+    "caught": { "label": "Dopadení", "text": "Zadrženo. Tentokrát už neutekl." }
+  }
+}
