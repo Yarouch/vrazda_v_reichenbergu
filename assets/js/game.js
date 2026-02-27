@@ -233,6 +233,7 @@ function unlockEvidence(stage){
 
 function submitAnswer(given){
   const stage = currentStage();
+
   if(!isCorrect(stage, given)){
     toast("Nesedí to. Zkus to znovu.");
     return;
@@ -241,39 +242,34 @@ function submitAnswer(given){
   unlockEvidence(stage);
   toast("Správně. Nová stopa odhalena.");
 
-  // advance
   const nextIndex = session.stageIndex + 1;
 
-  // If finishing main stage 5 -> decide bonus eligibility
-  
-  // simpler: check if next stage exists and isBonus
-  // We'll compute eligibility when about to enter bonus stage:
+  // Pokud další stage je bonus
   if(nextIndex < data.stages.length && data.stages[nextIndex].isBonus){
     const totalTime = (session.elapsedSec || 0) + (session.penaltySec || 0);
     const threshold = data.meta.bonusTimeThresholdSec ?? 4200;
+
     session.bonusEligible = totalTime <= threshold;
 
     if(session.bonusEligible){
-      // go to bonus
       session.stageIndex = nextIndex;
       saveSession(session);
       renderStage();
       return;
     } else {
-      // skip bonus and finish
       finishGame(false);
       return;
     }
   }
 
-  // If bonus completed
+  // Pokud byl dokončen bonus
   if(stage.isBonus){
     session.bonusCompleted = true;
     finishGame(true);
     return;
   }
 
-  // normal next
+  // Normální přechod na další bod
   if(nextIndex >= data.stages.length){
     finishGame(false);
     return;
@@ -308,6 +304,7 @@ function finishGame(bonusDone){
 
 }
 }
+
 
 
 
