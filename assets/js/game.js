@@ -43,6 +43,8 @@ let data;
 let map;
 let targetMarker = null;
 let playerMarker = null;
+let completedRoute = null; // polyline dokončených bodů
+
 
 let player = { lat:null, lng:null, acc:null };
 
@@ -52,6 +54,8 @@ if(!session?.active) location.href = "index.html";
 (async function main(){
   // ✅ mapa naskočí hned
   map = initMap();
+  // vrstva trasy (dokončené body)
+completedRoute = L.polyline([], { weight: 5, opacity: 0.9 }).addTo(map);
 
   // ✅ zkus načíst data hry (JSON) bezpečně
   try {
@@ -133,6 +137,27 @@ function renderEvidence(){
   }
 }
 
+function updateCompletedRoute(){
+  if(!data || !map || !completedRoute) return;
+
+  const doneStages = data.stages
+    .slice(0, Math.max(0, session.stageIndex))
+    .filter(s => !s.isBonus); // bonus ven (doporučeno)
+
+  const latlngs = doneStages.map(s => [s.lat, s.lng]);
+  completedRoute.setLatLngs(latlngs);
+
+  // Tečky: smaž staré
+  completedDots.forEach(d => map.removeLayer(d));
+  completedDots = [];
+
+  // Tečky: nakresli nové
+  latlngs.forEach(ll => {
+    const dot = L.circleMarker(ll, { radius: 5, opacity: 1, fillOpacity: 1 }).addTo(map);
+    completedDots.push(dot);
+  });
+}
+
 function updateProgressUI(stage){
   const mainStages = data.stages.filter(s => !s.isBonus);
   const mainIndex = mainStages.findIndex(s => s.id === stage.id);
@@ -191,6 +216,7 @@ function renderStage(){
 
   renderEvidence();
   updateDistanceUI();
+  updateCompletedRoute();
 }
 
 function updateDistanceUI(gpsOff=false){
@@ -302,3 +328,4 @@ function finishGame(bonusDone){
   saveSession(session);
   location.href = "end.html";
 }
+
