@@ -1,10 +1,23 @@
 {
   "meta": {
     "title": "Vražda v Reichenbergu",
-    "softGps": true,
-    "defaultRadiusM": 40,
-    "bonusTimeThresholdSec": 4200
-  },
+    "intro": {
+      "kicker": "Tajný briefing",
+      "lines": [
+        "Je chladný podvečer a město pomalu utichá.",
+        "Před několika dny byl nalezen mrtvý muž. Oficiálně nehoda. Neoficiálně — někdo nechce, aby se pravda dostala ven.",
+        "Ty jsi byl vybrán, protože nejsi součástí systému. Nemáš odznak, ale vidíš souvislosti.",
+        "Ve městě jsou ukryté fragmenty pravdy. Každá správná odpověď tě přiblíží vrahovi.",
+        "⏱️ Čas běží. 📍 Sleduj mapu. 🧠 Všímej si detailů."
+      ],
+      "cta": "Začít vyšetřování",
+      "audio": {
+        "src": "assets/audio/ambient.mp3",
+        "volume": 0.35
+      }
+    }
+  }
+},
   "penalties": { "hint1Sec": 120, "hint2Sec": 240, "hint3Sec": 360 },
   "stages": [
     {
