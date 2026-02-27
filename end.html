@@ -20,28 +20,102 @@
 
       <div class="divider"></div>
 
-      <button class="btn" id="btnCopy">Zkopírovat výsledek</button>
-      <a class="btn primary" href="index.html" id="btnAgain">Hrát znovu</a>
+      <div class="label" style="margin-bottom:6px;">Název týmu (pro leaderboard)</div>
+      <input id="teamNameEnd" class="input" placeholder="Např. Noční hlídka" autocomplete="off" />
+
+      <div style="height:10px;"></div>
+
+      <button class="btn primary" id="btnSubmitScore">🏆 Odeslat do leaderboardu</button>
+      <a class="btn" href="leaderboard.html">Zobrazit leaderboard</a>
+
+<div class="divider"></div>
+
+<button class="btn" id="btnCopy">Zkopírovat výsledek</button>
+<a class="btn" href="index.html" id="btnAgain">Hrát znovu</a>
     </section>
   </main>
 
   <script type="module">
-    import { loadSession, formatTime } from "./assets/js/storage.js";
+  import { loadSession, formatTime } from "./assets/js/storage.js";
 
-    const s = loadSession();
-    const time = (s?.elapsedSec ?? 0) + (s?.penaltySec ?? 0);
-    document.getElementById("finalTime").textContent = formatTime(time);
-    document.getElementById("finalHints").textContent = String(s?.hintsUsed ?? 0);
-    document.getElementById("finalBonus").textContent = s?.bonusCompleted ? "splněn ✅" : "nesplněn";
+  // ====== CONFIG: doplň svoje Supabase údaje ======
+  const SUPABASE_URL = "https://TVUJ_PROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "TVUJ_ANON_KEY";
 
-    document.getElementById("endingText").textContent =
-      "Wiedermaier odhalil padělky. Mecenáš se bál skandálu — a proto sáhl po násilí.";
+  const TEAM_KEY = "reichenberg_teamName_v1";
 
-    document.getElementById("btnCopy").onclick = async () => {
-      const text = `Vražda v Reichenbergu — čas ${formatTime(time)}, nápovědy ${s?.hintsUsed ?? 0}, bonus ${s?.bonusCompleted ? "ano" : "ne"}.`;
-      try { await navigator.clipboard.writeText(text); alert("Zkopírováno."); }
-      catch { prompt("Zkopíruj ručně:", text); }
+  const s = loadSession();
+  const time = (s?.elapsedSec ?? 0) + (s?.penaltySec ?? 0);
+
+  document.getElementById("finalTime").textContent = formatTime(time);
+  document.getElementById("finalHints").textContent = String(s?.hintsUsed ?? 0);
+  document.getElementById("finalBonus").textContent = s?.bonusCompleted ? "splněn ✅" : "nesplněn";
+
+  document.getElementById("endingText").textContent =
+    "Wiedermaier odhalil padělky. Mecenáš se bál skandálu — a proto sáhl po násilí.";
+
+  // ====== Copy result ======
+  document.getElementById("btnCopy").onclick = async () => {
+    const text = `Vražda v Reichenbergu — čas ${formatTime(time)}, nápovědy ${s?.hintsUsed ?? 0}, bonus ${s?.bonusCompleted ? "ano" : "ne"}.`;
+    try { await navigator.clipboard.writeText(text); alert("Zkopírováno."); }
+    catch { prompt("Zkopíruj ručně:", text); }
+  };
+
+  // ====== Leaderboard submit ======
+  const teamEl = document.getElementById("teamNameEnd");
+  const btnSubmit = document.getElementById("btnSubmitScore");
+
+  // předvyplň team name z localStorage (pokud ho sbíráš na startu)
+  const teamDefault = (localStorage.getItem(TEAM_KEY) || "").trim();
+  if(teamEl) teamEl.value = teamDefault;
+
+  function safeTeamName(){
+    const name = (teamEl?.value || "").trim();
+    return name.length ? name : "Bez názvu";
+  }
+
+  async function submitScore(){
+    const payload = {
+      team_name: safeTeamName(),
+      time_sec: Math.max(0, Number(time) || 0),
+      hints_used: Number(s?.hintsUsed || 0),
+      bonus_completed: !!s?.bonusCompleted
     };
-  </script>
+
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        apikey: SUPABASE_ANON_KEY,
+        authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        prefer: "return=minimal"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if(!res.ok){
+      const t = await res.text();
+      throw new Error(`Submit failed: ${res.status} ${t}`);
+    }
+  }
+
+  if(btnSubmit){
+    btnSubmit.onclick = async ()=>{
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = "Odesílám…";
+      try{
+        await submitScore();
+        localStorage.setItem(TEAM_KEY, safeTeamName());
+        btnSubmit.textContent = "✅ Odesláno! Otevírám leaderboard…";
+        setTimeout(()=> location.href="leaderboard.html", 600);
+      } catch(e){
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = "🏆 Odeslat do leaderboardu";
+        alert(e.message);
+      }
+    };
+  }
+</script>
 </body>
+
 </html>
