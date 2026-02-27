@@ -13,10 +13,25 @@
       <p class="muted">Detektivní city game v centru Liberce. Další bod se odhalí až po vyřešení indicie.</p>
     </header>
 
-    <div class="row">
-    <div class="label">Název týmu</div>
-    </div>
-    <input id="teamName" class="input" placeholder="Např. Noční hlídka" autocomplete="off" />
+    <div class="team-card">
+  <div class="team-header">🗂️ IDENTIFIKACE TÝMU</div>
+
+  <div class="team-text">
+    Každý případ potřebuje jméno.<br>
+    Jak si bude říkat vaše vyšetřovací jednotka?
+  </div>
+
+  <div class="team-input-row">
+    <input id="teamName" class="team-input"
+           placeholder="Např. Noční hlídka"
+           autocomplete="off" />
+    <button id="btnRandomTeam" class="team-random">🎲</button>
+  </div>
+
+  <div class="team-hint">
+    Název se zobrazí ve výsledcích a leaderboardu
+  </div>
+</div>
     
     <section class="card">
       <button id="btnStart" class="btn primary">Začít novou hru</button>
@@ -53,4 +68,5 @@
   <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
+
 
