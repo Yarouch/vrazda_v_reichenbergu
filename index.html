@@ -14,30 +14,25 @@
     </header>
 
 <div class="teamCard">
-  <div class="teamTop">
-    <div class="teamBadge">CASE FILE</div>
-    <div class="teamTitle">Zaregistruj tým</div>
+  <div class="team-header">🗂️ IDENTIFIKACE TÝMU</div>
+
+  <div class="team-text">
+    Každý případ potřebuje jméno.<br>
+    Jak si bude říkat vaše vyšetřovací jednotka?
   </div>
 
-  <div class="teamLead">
-    Jak se bude jmenovat vaše vyšetřovací jednotka?
-  </div>
-
-  <label class="teamLabel" for="teamName">Název týmu</label>
-
-  <div class="teamField">
-    <input id="teamName" class="teamFieldInput"
+  <div class="team-input-row">
+    <input id="teamName"
+           class="team-input"
            placeholder="Např. Noční hlídka"
            autocomplete="off" />
-    <button id="btnRandomTeam" class="teamFieldBtn" type="button" title="Vymyslet název">
-      🎲 <span>Vymyslet</span>
-    </button>
+    <button id="btnRandomTeam"
+            class="team-random"
+            type="button">🎲</button>
   </div>
 
-  <div class="teamMeta">
-    <span>💾 Uloží se pro leaderboard</span>
-    <span class="teamMetaDot">•</span>
-    <span>Bez registrace</span>
+  <div class="team-hint">
+    Název se zobrazí ve výsledcích a leaderboardu
   </div>
 </div>
     
@@ -76,6 +71,7 @@
   <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
+
 
 
 
