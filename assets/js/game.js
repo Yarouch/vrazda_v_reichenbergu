@@ -1,4 +1,4 @@
-import { loadSession, saveSession, clearSession, formatTime } from "./storage.js";
+import { loadSession, saveSession, clearSession, formatTime, loadTrail, saveTrail, clearTrail } from "./storage.js";
 import { watchPosition, haversineM } from "./geo.js";
 import { initMap, makeMarker } from "./map.js";
 
@@ -43,6 +43,11 @@ let data;
 let map;
 let targetMarker = null;
 let playerMarker = null;
+let playerTrail = [];       // [[lat,lng,t], ...]
+let playerTrailLine = null; // polyline
+const TRAIL_MAX = 300;
+const TRAIL_MIN_STEP_M = 8;      // ignoruj menší posun (GPS šum)
+const TRAIL_MIN_STEP_SEC = 4;    // minimální čas mezi body
 let completedRoute = null; // polyline dokončených bodů
 
 
@@ -54,6 +59,9 @@ if(!session?.active) location.href = "index.html";
 (async function main(){
   // ✅ mapa naskočí hned
   map = initMap();
+  // === Player GPS trail (breadcrumb) ===
+playerTrail = loadTrail(); // může být []
+playerTrailLine = L.polyline(playerTrail.map(p => [p[0], p[1]]), { weight: 4, opacity: 0.8 }).addTo(map);
   // vrstva trasy (dokončené body)
 completedRoute = L.polyline([], { weight: 5, opacity: 0.9 }).addTo(map);
 
@@ -83,6 +91,7 @@ completedRoute = L.polyline([], { weight: 5, opacity: 0.9 }).addTo(map);
       player.lat = p.coords.latitude;
       player.lng = p.coords.longitude;
       player.acc = Math.round(p.coords.accuracy || 0);
+      pushTrailPoint(player.lat, player.lng);
       gpsEl.textContent = `OK (±${player.acc} m)`;
       if(!playerMarker){
         playerMarker = L.circleMarker([player.lat, player.lng], { radius:6 }).addTo(map);
@@ -120,6 +129,33 @@ function toast(msg){
   toastEl.textContent = msg;
   toastEl.style.display="block";
   setTimeout(()=>toastEl.style.display="none", 1800);
+}
+
+// ===== GPS trail (breadcrumb) =====
+function pushTrailPoint(lat, lng){
+  const now = Date.now();
+
+  const last = playerTrail[playerTrail.length - 1];
+
+  if(last){
+    const dt = (now - (last[2] || 0)) / 1000;
+    const d = haversineM(last[0], last[1], lat, lng);
+
+    if(dt < TRAIL_MIN_STEP_SEC) return;
+    if(d < TRAIL_MIN_STEP_M) return;
+  }
+
+  playerTrail.push([lat, lng, now]);
+
+  if(playerTrail.length > TRAIL_MAX){
+    playerTrail = playerTrail.slice(playerTrail.length - TRAIL_MAX);
+  }
+
+  if(playerTrailLine){
+    playerTrailLine.setLatLngs(playerTrail.map(p => [p[0], p[1]]));
+  }
+
+  saveTrail(playerTrail);
 }
 
 function currentStage(){
@@ -328,4 +364,5 @@ function finishGame(bonusDone){
   saveSession(session);
   location.href = "end.html";
 }
+
 
