@@ -16,15 +16,14 @@
         "volume": 0.35
       }
     }
-  }
-},
+  },
   "penalties": { "hint1Sec": 120, "hint2Sec": 240, "hint3Sec": 360 },
   "stages": [
     {
       "id": "lazne",
       "order": 1,
       "title": "Galerie_Lazne",
-      "lat": 50.7738200,
+      "lat": 50.77382,
       "lng": 15.0677973,
       "radiusM": 45,
       "story": "Archivář ti podává složku. „Wiedermaier nezemřel kvůli penězům. Zemřel kvůli pravdě.“",
@@ -101,7 +100,7 @@
       "hints": [
         "Správná odpověd je 1234lebka.",
         "Použij jen čísla, žádné oddělovače.",
-        "Lazne 1, Divadlo 2, Radnice 3, Kostel lebka) → pro prototyp dej 1234lebka."
+        "Lazne 1, Divadlo 2, Radnice 3, Kostel lebka → pro prototyp dej 1234lebka."
       ],
       "evidenceUnlock": ["accuse_CJ"]
     },
