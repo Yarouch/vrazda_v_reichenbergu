@@ -89,7 +89,41 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script type="module" src="assets/js/game.js"></script>
+  <script type="module">
+  // Fallback + bezpečné načtení game.js i bez konzole
+  async function ensureLeaflet() {
+    if (window.L) return;
+
+    await new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+
+    if (!window.L) throw new Error("Leaflet se nepodařilo načíst ani z unpkg ani z jsDelivr.");
+  }
+
+  function showError(msg){
+    const box = document.createElement("div");
+    box.style.cssText =
+      "position:fixed;top:120px;left:12px;right:12px;z-index:999999;" +
+      "background:#300;color:#fff;padding:12px;border-radius:12px;" +
+      "font-family:system-ui;white-space:pre-wrap;";
+    box.textContent = msg;
+    document.body.appendChild(box);
+  }
+
+  try {
+    await ensureLeaflet();
+    await import("./assets/js/game.js");
+  } catch (e) {
+    showError("CHYBA při načítání:\n" + (e?.message || e));
+  }
+</script>
+  
 </body>
 
 </html>
+
