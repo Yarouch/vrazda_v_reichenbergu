@@ -20,6 +20,17 @@
     </div>
   </header>
 
+<!-- Progress bar -->
+<div class="progresswrap" aria-label="Průběh hry">
+  <div class="progressmeta">
+    <span id="progressText" class="muted">Postup: 0 / 5</span>
+    <span id="progressPct" class="mono">0%</span>
+  </div>
+  <div class="progressbar">
+    <div id="progressFill" class="progressfill" style="width:0%"></div>
+  </div>
+</div>
+  
   <div id="map"></div>
 
   <section class="sheet" id="missionSheet">
@@ -80,4 +91,5 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="assets/js/game.js"></script>
 </body>
+
 </html>
