@@ -75,8 +75,12 @@ body.game{ height:100vh; overflow:hidden; }
   border:1px solid var(--line); background:#0f1620; color:var(--text);
 }
 
-.mcq{ display:flex; flex-wrap:wrap; gap:8px; }
-.mcq button{ flex:1 1 calc(50% - 8px); }
+.mcq{
+  display:grid; grid-template-columns: 1fr 1fr; gap:8px;
+}
+
+.mcq button{width:100%;
+}
 
 .evidence{ margin-top:10px; }
 .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
@@ -131,4 +135,17 @@ body.game{ height:100vh; overflow:hidden; }
   background:var(--accent);
   width:0%;
   transition:width .35s ease;
+}
+/* iOS: zabraň divnému "zvětšení" po tapnutí na tlačítko */
+button, .btn, .iconbtn{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* iOS: sjednotí vzhled a zabrání auto-zoom/focus efektům */
+button, .btn, .iconbtn{
+  -webkit-appearance: none;
+  appearance: none;
+}
+.mcq button, .input{
+  font-size:16px;
 }
