@@ -10,26 +10,34 @@
   <main class="page">
     <header class="hero">
       <h1>Vražda v Reichenbergu (1921)</h1>
-      <p class="muted">Detektivní city game v centru Liberce. Další bod se odhalí až po vyřešení indicie.</p>
+      <p class="muted">Detektivní city game v centru Liberce.</p>
     </header>
 
-    <div class="team-card">
-  <div class="team-header">🗂️ IDENTIFIKACE TÝMU</div>
-
-  <div class="team-text">
-    Každý případ potřebuje jméno.<br>
-    Jak si bude říkat vaše vyšetřovací jednotka?
+<div class="teamCard">
+  <div class="teamTop">
+    <div class="teamBadge">CASE FILE</div>
+    <div class="teamTitle">Zaregistruj tým</div>
   </div>
 
-  <div class="team-input-row">
-    <input id="teamName" class="team-input"
+  <div class="teamLead">
+    Jak se bude jmenovat vaše vyšetřovací jednotka?
+  </div>
+
+  <label class="teamLabel" for="teamName">Název týmu</label>
+
+  <div class="teamField">
+    <input id="teamName" class="teamFieldInput"
            placeholder="Např. Noční hlídka"
            autocomplete="off" />
-    <button id="btnRandomTeam" class="team-random">🎲</button>
+    <button id="btnRandomTeam" class="teamFieldBtn" type="button" title="Vymyslet název">
+      🎲 <span>Vymyslet</span>
+    </button>
   </div>
 
-  <div class="team-hint">
-    Název se zobrazí ve výsledcích a leaderboardu
+  <div class="teamMeta">
+    <span>💾 Uloží se pro leaderboard</span>
+    <span class="teamMetaDot">•</span>
+    <span>Bez registrace</span>
   </div>
 </div>
     
@@ -68,5 +76,6 @@
   <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
+
 
 
