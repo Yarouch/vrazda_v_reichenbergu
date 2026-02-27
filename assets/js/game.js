@@ -29,7 +29,7 @@ const hintText = document.getElementById("hintText");
 
 document.getElementById("btnHints").onclick = ()=> openModal(hintsModal);
 document.getElementById("btnMenu").onclick = ()=> openModal(menuModal);
-document.("btnCloseHints").onclick = ()=> closeModal(hintsModal);
+document.getElementById("btnCloseHints").onclick = ()=> closeModal(hintsModal);
 document.getElementById("btnCloseMenu").onclick = ()=> closeModal(menuModal);
 
 document.getElementById("btnReset").onclick = ()=>{
@@ -152,7 +152,7 @@ function renderStage(){
   titleEl.textContent = stage.title;
   storyEl.textContent = stage.story;
   taskEl.textContent = stage.task;
-  updateProgressUI(stage);;
+  updateProgressUI(stage);
 
   // marker
   if(targetMarker) map.removeLayer(targetMarker);
@@ -234,7 +234,7 @@ function submitAnswer(given){
   const nextIndex = session.stageIndex + 1;
 
   // If finishing main stage 5 -> decide bonus eligibility
-  const isLastMain = !stage.isBonus && data.stages.filter(s=>!s.isBonus).every((s,i)=> i===0 ? true : true);
+  
   // simpler: check if next stage exists and isBonus
   // We'll compute eligibility when about to enter bonus stage:
   if(nextIndex < data.stages.length && data.stages[nextIndex].isBonus){
@@ -296,4 +296,6 @@ function finishGame(bonusDone){
   location.href = "end.html";
 
 }
+}
+
 
