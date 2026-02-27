@@ -1,5 +1,6 @@
 const SUPABASE_URL = "https://hpawsxioispppkfiridq.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYXdzeGlvaXNwcHBrZmlyaWRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTY5NTEsImV4cCI6MjA4Nzc5Mjk1MX0.Hts2vRw-u-QQ0cJnKy7lt6cmDeZSLdDp2BuimJ_aPQ0";
+const TOP_N = 20;
 
 const statusEl = document.getElementById("lbStatus");
 const listEl = document.getElementById("lbList");
@@ -11,12 +12,18 @@ function formatTime(sec){
   return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
 }
 
-async function supabaseSelectTop(limit=30){
+function escapeHtml(s){
+  return String(s ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+async function loadTop(){
   const url =
     `${SUPABASE_URL}/rest/v1/leaderboard` +
     `?select=team_name,time_sec,hints_used,bonus_completed,created_at` +
     `&order=time_sec.asc,created_at.asc` +
-    `&limit=${limit}`;
+    `&limit=${TOP_N}`;
 
   const res = await fetch(url, {
     headers: {
@@ -27,46 +34,53 @@ async function supabaseSelectTop(limit=30){
 
   if(!res.ok){
     const t = await res.text();
-    throw new Error(`Supabase select failed: ${res.status} ${t}`);
+    throw new Error(`Supabase SELECT failed: ${res.status} ${t}`);
   }
+
   return res.json();
+}
+
+function medal(i){
+  if(i === 0) return "🥇";
+  if(i === 1) return "🥈";
+  if(i === 2) return "🥉";
+  return `${i+1}.`;
 }
 
 function render(rows){
   if(!rows.length){
     statusEl.textContent = "Zatím žádné výsledky.";
-    listEl.innerHTML = "";
+    listEl.innerHTML = `<p class="muted">Buďte první, kdo odešle výsledek z konce hry.</p>`;
     return;
   }
 
-  statusEl.textContent = `Zobrazuji top ${rows.length}`;
+  statusEl.textContent = `Načteno ${rows.length} / ${TOP_N}`;
+
   listEl.innerHTML = rows.map((r, i) => {
-    const medal = i===0 ? "🥇" : i===1 ? "🥈" : i===2 ? "🥉" : `${i+1}.`;
     const bonus = r.bonus_completed ? "⭐ BONUS" : "";
+    const hints = Number(r.hints_used || 0);
+
     return `
-      <div style="display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(34,48,65,.6);">
+      <div class="row" style="padding:10px 0; border-bottom:1px solid rgba(34,48,65,.55);">
         <div>
-          <div style="font-weight:800;">${medal} ${escapeHtml(r.team_name)}</div>
-          <div class="muted" style="font-size:12px;">Nápovědy: ${r.hints_used} ${bonus}</div>
+          <div style="font-weight:800;">${medal(i)} ${escapeHtml(r.team_name)}</div>
+          <div class="muted" style="font-size:12px;">Nápovědy: ${hints} ${bonus}</div>
         </div>
-        <div class="mono" style="font-weight:900;font-size:16px;">${formatTime(r.time_sec)}</div>
+        <div class="mono" style="font-weight:900; font-size:16px;">${formatTime(r.time_sec)}</div>
       </div>
     `;
   }).join("");
 }
 
-function escapeHtml(s){
-  return String(s ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-}
-
 (async function main(){
   try{
-    const rows = await supabaseSelectTop(30);
+    const rows = await loadTop();
     render(rows);
   } catch(e){
-    statusEl.textContent = "Nepodařilo se načíst leaderboard.";
-    listEl.innerHTML = `<div class="muted" style="margin-top:8px;">${escapeHtml(e.message)}</div>`;
+    statusEl.textContent = "Chyba";
+    listEl.innerHTML = `
+      <p class="muted">Nepodařilo se načíst leaderboard.</p>
+      <p class="muted" style="font-size:12px;">${escapeHtml(e.message)}</p>
+    `;
   }
 })();
