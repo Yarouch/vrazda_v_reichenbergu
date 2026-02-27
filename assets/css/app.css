@@ -149,3 +149,27 @@ button, .btn, .iconbtn{
 .mcq button, .input{
   font-size:16px;
 }
+/* ===== Spacing system (clean layout) ===== */
+
+.page > * + * {
+  margin-top: 18px;
+}
+
+/* Team card spacing */
+.teamCard{
+  padding: 16px;
+}
+
+.teamCard > * + *{
+  margin-top: 12px;
+}
+
+/* Větší mezera pod team card */
+.teamCard{
+  margin-bottom: 18px;
+}
+
+/* Lepší vertikální rytmus v sekci card */
+.card > * + *{
+  margin-top: 14px;
+}
