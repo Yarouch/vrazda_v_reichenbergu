@@ -8,17 +8,17 @@
 </head>
 <body>
 
-<div class="page">
+<main class="page">
 
-  <div class="hero">
+  <header class="hero">
     <h1>🕵️‍♂️ Vražda v Reichenbergu</h1>
     <p class="muted">Tajný briefing</p>
-  </div>
+  </header>
 
-  <div class="card">
+  <section class="card">
 
     <p>
-      Je chladný podvečer a město pomalu utichá. Ulice, které ještě před hodinou
+      Je chladný podvečer roku 1921 a město pomalu utichá. Ulice, které ještě před hodinou
       pulzovaly životem, se noří do šera. Právě teď zazvonil telefon — anonymní
       hlas bez pozdravu vyslovil jediné jméno… a pak zavěsil.
     </p>
@@ -56,19 +56,64 @@
 
     <div class="divider"></div>
 
-   <div class="actions">
-  <button class="btn primary" id="btnGo" type="button">Začít vyšetřování</button>
+    <!-- AUDIO ROW -->
+    <div class="row" style="margin: 6px 0 12px;">
+      <div class="muted" id="audioStatus">🎧 Zvuk: vypnuto</div>
+      <button class="btn" id="btnAudio" type="button" style="width:auto; padding:10px 12px;">
+        Zapnout ambient
+      </button>
+    </div>
 
-  <a class="btn" id="btnBoard" href="leaderboard.html">🏆 Leaderboard</a>
-  </div>
+    <div class="actions">
+      <button class="btn primary" id="btnGo" type="button">Začít vyšetřování</button>
+      <a class="btn" id="btnBoard" href="leaderboard.html">🏆 Leaderboard</a>
+    </div>
 
-  </div>
-</div>
+  </section>
+</main>
+
+<!-- Audio element (iOS friendly) -->
+<audio id="ambient" preload="auto" loop playsinline></audio>
 
 <script>
-document.getElementById("btnGo").onclick = () => {
-  location.href = "game.html";
-};
+  const audioEl = document.getElementById("ambient");
+  const btnAudio = document.getElementById("btnAudio");
+  const audioStatus = document.getElementById("audioStatus");
+
+  // nastav zdroj (máš ověřené, že URL hraje)
+  audioEl.src = "assets/audio/ambient.mp3";
+  audioEl.volume = 0.35;
+  audioEl.load();
+
+  let audioOn = false;
+
+  btnAudio.onclick = async () => {
+    try {
+      if (!audioOn) {
+        // na mobilech pomáhá začít od začátku
+        try { audioEl.currentTime = 0; } catch {}
+        await audioEl.play();
+        audioOn = true;
+        audioStatus.textContent = "🎧 Zvuk: zapnuto";
+        btnAudio.textContent = "Vypnout ambient";
+      } else {
+        audioEl.pause();
+        audioOn = false;
+        audioStatus.textContent = "🎧 Zvuk: vypnuto";
+        btnAudio.textContent = "Zapnout ambient";
+      }
+    } catch (e) {
+      console.error("AUDIO ERROR:", e);
+      audioStatus.textContent = "🎧 Zvuk: blokováno";
+      alert("Prohlížeč zablokoval přehrání. Zkus kliknout znovu, zkontroluj tichý režim nebo jiný prohlížeč.");
+    }
+  };
+
+  document.getElementById("btnGo").onclick = () => {
+    // když jdeš do hry, můžeš zvuk nechat běžet jen pokud bys to řešil globálně
+    // na dalších stránkách se audio zastaví (nová page load)
+    location.href = "game.html";
+  };
 </script>
 
 </body>
