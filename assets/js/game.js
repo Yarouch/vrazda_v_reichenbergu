@@ -301,10 +301,4 @@ function finishGame(bonusDone){
   session.bonusCompleted = !!bonusDone;
   saveSession(session);
   location.href = "end.html";
-
 }
-}
-
-
-
-
