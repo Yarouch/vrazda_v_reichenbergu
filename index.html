@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vražda v Reichenbergu</title>
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>Vražda v Reichenbergu (1921)</h1>
+      <p class="muted">Detektivní city game v centru Liberce. Další bod se odhalí až po vyřešení indicie.</p>
+    </header>
+
+    <section class="card">
+      <button id="btnStart" class="btn primary">Začít novou hru</button>
+      <button id="btnResume" class="btn" style="display:none;">Pokračovat</button>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div>
+          <div class="label">GPS režim</div>
+          <div class="muted">Soft (hra funguje i bez polohy, jen upozorní když jsi daleko)</div>
+        </div>
+        <span class="pill">SOFT</span>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="label">Nápovědy</div>
+          <div class="muted">3 úrovně • +2 / +4 / +6 minut penalizace</div>
+        </div>
+        <span class="pill">PENALTY</span>
+      </div>
+
+      <details class="howto">
+        <summary>Jak to funguje</summary>
+        <ol>
+          <li>Dojdi na místo (nebo hraj bez GPS).</li>
+          <li>Najdi indicii v reálném světě.</li>
+          <li>Zadej odpověď → odhalí se další bod na mapě.</li>
+        </ol>
+      </details>
+    </section>
+  </main>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

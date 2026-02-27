@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hra – Vražda v Reichenbergu</title>
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body class="game">
+  <header class="statusbar" id="statusBar">
+    <div class="status-left">
+      <span class="mono">⏱ <span id="timer">00:00</span></span>
+      <span class="mono">📍 <span id="gpsStatus">Hledám…</span></span>
+    </div>
+    <div class="status-right">
+      <button class="iconbtn" id="btnCenter" title="Zaměřit mapu">🧭</button>
+      <button class="iconbtn" id="btnHints" title="Nápovědy">💡</button>
+      <button class="iconbtn" id="btnMenu" title="Menu">☰</button>
+    </div>
+  </header>
+
+  <div id="map"></div>
+
+  <section class="sheet" id="missionSheet">
+    <div class="sheet-header">
+      <div>
+        <div class="kicker" id="stageKicker">Stanoviště 1/5</div>
+        <h2 id="stageTitle">Načítám…</h2>
+      </div>
+      <div class="pill" id="distancePill">…</div>
+    </div>
+
+    <p class="story" id="stageStory"></p>
+    <p class="task" id="stageTask"></p>
+
+    <div class="inputRow" id="answerRow">
+      <input id="answerInput" class="input" placeholder="Odpověď…" autocomplete="off" />
+      <button id="btnSubmit" class="btn primary">Odeslat</button>
+    </div>
+
+    <div class="mcq" id="mcqRow" style="display:none;"></div>
+
+    <div class="evidence">
+      <div class="label">Důkazy</div>
+      <div class="chips" id="evidenceChips"></div>
+    </div>
+  </section>
+
+  <!-- Hints modal -->
+  <div class="modal-backdrop" id="hintsModal">
+    <div class="modal">
+      <h3>Nápovědy (časová penalizace)</h3>
+      <div class="hintBtns">
+        <button class="btn" data-hint="1">Nápověda 1 (+2 min)</button>
+        <button class="btn" data-hint="2">Nápověda 2 (+4 min)</button>
+        <button class="btn" data-hint="3">Nápověda 3 (+6 min)</button>
+      </div>
+      <div class="hintText" id="hintText"></div>
+      <div class="modalActions">
+        <button class="btn" id="btnCloseHints">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu modal -->
+  <div class="modal-backdrop" id="menuModal">
+    <div class="modal">
+      <h3>Menu</h3>
+      <button class="btn danger" id="btnReset">Restartovat hru</button>
+      <a class="btn" href="index.html">Zpět na start</a>
+      <div class="modalActions">
+        <button class="btn" id="btnCloseMenu">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="assets/js/game.js"></script>
+</body>
+</html>

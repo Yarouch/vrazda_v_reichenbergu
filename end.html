@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Výsledek – Vražda v Reichenbergu</title>
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>Případ uzavřen</h1>
+      <p class="muted" id="endingText">…</p>
+    </header>
+
+    <section class="card">
+      <div class="row"><div class="label">Celkový čas</div><div class="mono" id="finalTime">—</div></div>
+      <div class="row"><div class="label">Nápovědy</div><div class="mono" id="finalHints">—</div></div>
+      <div class="row"><div class="label">Bonus</div><div class="mono" id="finalBonus">—</div></div>
+
+      <div class="divider"></div>
+
+      <button class="btn" id="btnCopy">Zkopírovat výsledek</button>
+      <a class="btn primary" href="index.html" id="btnAgain">Hrát znovu</a>
+    </section>
+  </main>
+
+  <script type="module">
+    import { loadSession, formatTime } from "./assets/js/storage.js";
+
+    const s = loadSession();
+    const time = (s?.elapsedSec ?? 0) + (s?.penaltySec ?? 0);
+    document.getElementById("finalTime").textContent = formatTime(time);
+    document.getElementById("finalHints").textContent = String(s?.hintsUsed ?? 0);
+    document.getElementById("finalBonus").textContent = s?.bonusCompleted ? "splněn ✅" : "nesplněn";
+
+    document.getElementById("endingText").textContent =
+      "Wiedermaier odhalil padělky. Mecenáš se bál skandálu — a proto sáhl po násilí.";
+
+    document.getElementById("btnCopy").onclick = async () => {
+      const text = `Vražda v Reichenbergu — čas ${formatTime(time)}, nápovědy ${s?.hintsUsed ?? 0}, bonus ${s?.bonusCompleted ? "ano" : "ne"}.`;
+      try { await navigator.clipboard.writeText(text); alert("Zkopírováno."); }
+      catch { prompt("Zkopíruj ručně:", text); }
+    };
+  </script>
+</body>
+</html>
