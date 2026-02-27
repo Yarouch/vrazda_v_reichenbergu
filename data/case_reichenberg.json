@@ -16,9 +16,9 @@
       "radiusM": 45,
       "story": "Archivář ti podává složku. „Wiedermaier nezemřel kvůli penězům. Zemřel kvůli pravdě.“",
       "task": "Najdi nad hlavním vstupem 2 prvky (např. postavy a štíty). Sečti je a zadej výsledek.",
-      "answer": { "type": "number", "value": 7 },
+      "answer": { "type": "number", "value": 1 },
       "hints": [
-        "Zaměř se na dekor přímo nad hlavním vchodem.",
+        "Správná odpověd je 1.",
         "Počítej jen prvky na hlavním portálu, ne na celé fasádě.",
         "Výsledek je jednociferný."
       ],
@@ -33,9 +33,9 @@
       "radiusM": 40,
       "story": "Premiéra skončila. VIP salonek osiřel. Někdo ale zůstal dost dlouho na to, aby se pohádal…",
       "task": "Najdi rok na fasádě. Sečti jeho číslice a zadej součet.",
-      "answer": { "type": "number", "value": 20 },
+      "answer": { "type": "number", "value": 2 },
       "hints": [
-        "Hledej čtyřmístný letopočet na fasádě.",
+        "Správná odpověd je 2.",
         "Součet číslic má vyjít kolem dvaceti.",
         "Je to 1+8+8+3."
       ],
@@ -50,9 +50,9 @@
       "radiusM": 45,
       "story": "Na schodech radnice se naposledy veřejně pohádali. Někdo se díval. Někdo si to zapamatoval až moc dobře.",
       "task": "Najdi na věži ciferníky. Kolik jich ukazuje stejný čas? Zadej počet.",
-      "answer": { "type": "number", "value": 2 },
+      "answer": { "type": "number", "value": 3 },
       "hints": [
-        "Neřeš minuty na sekundy — stačí shoda času jako celku.",
+        "Správná odpověd je 3.",
         "Zaměř se na ciferníky na jedné věži.",
         "Počet je menší než 4."
       ],
@@ -69,26 +69,26 @@
       "task": "Najdi symbol na vstupu (nebo v blízkosti) a vyber jeho význam: Který z nich nejčastěji značí smrt?",
       "answer": { "type": "mcq", "value": "lebka", "options": ["kříž", "lebka", "meč", "koruna"] },
       "hints": [
-        "Jde o univerzální symbol, ne jen náboženský.",
+        "Správná odpověd je lebka.",
         "Představ si varovný znak na jedu.",
         "Je to lebka."
       ],
       "evidenceUnlock": ["informant_silenced"]
     },
     {
-      "id": "pre_finish",
+      "id": "naplavka",
       "order": 5,
       "title": "Stopa k útěku",
-      "lat": 50.7722,
-      "lng": 15.0602,
-      "radiusM": 60,
+      "lat": 50.7640693,
+      "lng": 15.0531095,
+      "radiusM": 40,
       "story": "Vrah ví, že se kruh uzavírá. Někde už se píská na odjezd.",
-      "task": "Z odpovědí z předchozích míst slož čtyřmístný kód: (Muzeum)(Divadlo)(Radnice)(Kostel) → zadej jako číslo bez mezer.",
-      "answer": { "type": "text", "value": "7202" },
+      "task": "Z odpovědí z předchozích míst slož kód: (Lazne)(Divadlo)(Radnice)(Kostel) → zadej jako číslo bez mezer.",
+      "answer": { "type": "text", "value": "1234lebka" },
       "hints": [
-        "Je to slepení výsledků v pořadí stanovišť.",
+        "Správná odpověd je 1234lebka.",
         "Použij jen čísla, žádné oddělovače.",
-        "Muzeum 7, Divadlo 20, Radnice 2, Kostel  (MCQ = 0) → pro prototyp dej 7202."
+        "Lazne 1, Divadlo 2, Radnice 3, Kostel lebka) → pro prototyp dej 1234lebka."
       ],
       "evidenceUnlock": ["accuse_CJ"]
     },
@@ -97,14 +97,14 @@
       "order": 6,
       "isBonus": true,
       "title": "BONUS — Nádraží (dopadení)",
-      "lat": 50.7667,
-      "lng": 15.0546,
+      "lat": 50.7615007,
+      "lng": 15.0462592,
       "radiusM": 70,
       "story": "Máš náskok. Pokud se pohneš rychle, doženeš ho dřív, než nastoupí.",
       "task": "Najdi označení nástupiště (nebo jiný veřejný údaj na místě) a zadej ho. (Pro prototyp zadej: 1)",
       "answer": { "type": "text", "value": "1" },
       "hints": [
-        "Hledej velké číslo na orientačních tabulích.",
+        "Hledej velké číslo na orientačních tabulích - 1",
         "Je to jednociferné.",
         "Je to 1."
       ],
