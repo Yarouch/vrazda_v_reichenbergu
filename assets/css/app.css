@@ -15,7 +15,17 @@ a{ color:inherit; text-decoration:none; }
 .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; }
 .divider{ height:1px; background:var(--line); margin:12px 0; }
 
-.btn{ width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--text); font-weight:600; }
+.btn{
+  display:block;          /* ✅ tohle opraví překryv <a> tlačítka */
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text);
+  font-weight:600;
+  text-align:center;      /* aby <a> vypadalo jako button */
+}
 .btn.primary{ background:var(--accent); border-color:transparent; color:#04101f; }
 .btn.danger{ background:var(--danger); border-color:transparent; color:#1b0206; }
 .btn + .btn{ margin-top:10px; }
