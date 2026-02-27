@@ -11,6 +11,10 @@ const taskEl = document.getElementById("stageTask");
 const distPill = document.getElementById("distancePill");
 const evidenceChips = document.getElementById("evidenceChips");
 
+const progressText = document.getElementById("progressText");
+const progressPct = document.getElementById("progressPct");
+const progressFill = document.getElementById("progressFill");
+
 const answerRow = document.getElementById("answerRow");
 const answerInput = document.getElementById("answerInput");
 const btnSubmit = document.getElementById("btnSubmit");
@@ -25,7 +29,7 @@ const hintText = document.getElementById("hintText");
 
 document.getElementById("btnHints").onclick = ()=> openModal(hintsModal);
 document.getElementById("btnMenu").onclick = ()=> openModal(menuModal);
-document.getElementById("btnCloseHints").onclick = ()=> closeModal(hintsModal);
+document.("btnCloseHints").onclick = ()=> closeModal(hintsModal);
 document.getElementById("btnCloseMenu").onclick = ()=> closeModal(menuModal);
 
 document.getElementById("btnReset").onclick = ()=>{
@@ -118,6 +122,23 @@ function renderEvidence(){
   }
 }
 
+function updateProgressUI(stage){
+  const mainStages = data.stages.filter(s => !s.isBonus);
+  const mainIndex = mainStages.findIndex(s => s.id === stage.id);
+
+  // Kolik hlavních stanovišť už je dokončeno?
+  // stageIndex = aktuální. Dokončené = index aktuálního (pokud jsme na N, předchozí jsou hotové)
+  const completed = stage.isBonus ? mainStages.length : Math.max(0, mainIndex);
+  const total = mainStages.length;
+
+  // % podle dokončených (nepočítá bonus)
+  const pct = Math.round((completed / total) * 100);
+
+  if (progressText) progressText.textContent = `Postup: ${completed} / ${total}`;
+  if (progressPct) progressPct.textContent = `${pct}%`;
+  if (progressFill) progressFill.style.width = `${pct}%`;
+}
+
 function renderStage(){
   const stage = currentStage();
   const mainStages = data.stages.filter(s => !s.isBonus);
@@ -130,7 +151,8 @@ function renderStage(){
   }
   titleEl.textContent = stage.title;
   storyEl.textContent = stage.story;
-  taskEl.textContent = stage.task;;
+  taskEl.textContent = stage.task;
+  updateProgressUI(stage);;
 
   // marker
   if(targetMarker) map.removeLayer(targetMarker);
@@ -274,3 +296,4 @@ function finishGame(bonusDone){
   location.href = "end.html";
 
 }
+
